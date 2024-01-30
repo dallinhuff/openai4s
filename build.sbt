@@ -1,11 +1,15 @@
-ThisBuild / version := "0.1.0-SNAPSHOT"
-
+ThisBuild / version := "0.1.1-SNAPSHOT"
 ThisBuild / scalaVersion := "3.3.1"
+
+githubOwner := "dallinhuff"
+githubRepository := "openai4s"
+githubTokenSource := TokenSource.Environment("GITHUB_PKG_TOKEN")
 
 val circeVersion = "0.14.5"
 
 lazy val root = (project in file("."))
   .settings(
+    organization := "com.dallinhuff",
     name := "openai4s",
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-core"    % circeVersion,
