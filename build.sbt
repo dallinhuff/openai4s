@@ -3,7 +3,7 @@ ThisBuild / scalaVersion := "3.3.1"
 
 githubOwner := "dallinhuff"
 githubRepository := "openai4s"
-githubTokenSource := TokenSource.Environment("GITHUB_PKG_TOKEN")
+githubTokenSource := TokenSource.Environment("GH_PKG_TOKEN")
 
 val circeVersion = "0.14.5"
 
