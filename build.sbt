@@ -1,16 +1,14 @@
 ThisBuild / organization := "com.dallinhuff"
 ThisBuild / name := "openai4s"
 ThisBuild / scalaVersion := "3.3.1"
+ThisBuild / description := "OpenAI API request serialization library for Scala"
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 
-// open source licenses that apply to the project
 licenses := Seq("MIT" -> url("https://github.com/dallinhuff/openai4s/blob/main/LICENSE"))
 
-description := "OpenAI API request serialization library for Scala"
-
-import xerial.sbt.Sonatype._
+import xerial.sbt.Sonatype.*
+sonatypeRepository := "https://s01.oss.sonatype.org/service/local"
 sonatypeProjectHosting := Some(GitHubHosting("dallinhuff", "openai4s", "dallinhuff@gmail.com"))
-
-// publish to the sonatype repository
 publishTo := sonatypePublishToBundle.value
 
 val circeVersion = "0.14.5"
