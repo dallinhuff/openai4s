@@ -21,25 +21,37 @@ object Message:
 
   given sysCodec: Codec[Message.SystemMessage] = new Codec[Message.SystemMessage]:
     override def apply(a: Message.SystemMessage): Json =
-      deriveEncoder[Message.SystemMessage](a).asJson.dropNullValues
+      deriveEncoder[Message.SystemMessage](a)
+        .asJson
+        .dropNullValues
+        .deepMerge(Json.obj("role" -> "system".asJson))
     override def apply(c: HCursor): Result[Message.SystemMessage] =
       deriveDecoder[Message.SystemMessage](c)
 
   given toolCodec: Codec[Message.ToolMessage] = new Codec[Message.ToolMessage]:
     override def apply(a: Message.ToolMessage): Json =
-      deriveEncoder[Message.ToolMessage](a).asJson.dropNullValues
+      deriveEncoder[Message.ToolMessage](a)
+        .asJson
+        .dropNullValues
+        .deepMerge(Json.obj("role" -> "tool".asJson))
     override def apply(c: HCursor): Result[Message.ToolMessage] =
       deriveDecoder[Message.ToolMessage](c)
 
   given usrCodec: Codec[Message.UserMessage] = new Codec[Message.UserMessage]:
     override def apply(a: Message.UserMessage): Json =
-      deriveEncoder[Message.UserMessage](a).asJson.dropNullValues
+      deriveEncoder[Message.UserMessage](a)
+        .asJson
+        .dropNullValues
+        .deepMerge(Json.obj("role" -> "user".asJson))
     override def apply(c: HCursor): Result[Message.UserMessage] =
       deriveDecoder[Message.UserMessage](c)
 
   given asstCodec: Codec[Message.AssistantMessage] = new Codec[Message.AssistantMessage]:
     override def apply(a: Message.AssistantMessage): Json =
-      deriveEncoder[Message.AssistantMessage](a).asJson.dropNullValues
+      deriveEncoder[Message.AssistantMessage](a)
+        .asJson
+        .dropNullValues
+        .deepMerge(Json.obj("role" -> "assistant".asJson))
     override def apply(c: HCursor): Result[Message.AssistantMessage] =
       deriveDecoder[Message.AssistantMessage](c)
 

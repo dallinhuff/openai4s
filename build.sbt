@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.dallinhuff"
-ThisBuild / name := "openai4s"
+ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / scalaVersion := "3.3.1"
 ThisBuild / description := "OpenAI API request serialization library for Scala"
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
@@ -12,13 +12,20 @@ sonatypeProjectHosting := Some(GitHubHosting("dallinhuff", "openai4s", "dallinhu
 publishTo := sonatypePublishToBundle.value
 
 val circeVersion = "0.14.5"
+val http4sVersion = "0.23.19"
 
 lazy val root = (project in file("."))
   .settings(
+    name := "openai4s",
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-core"    % circeVersion,
-      "io.circe" %% "circe-generic" % circeVersion,
-      "io.circe" %% "circe-literal" % circeVersion,
-      "io.circe" %% "circe-parser"  % circeVersion
+      "io.circe"       %% "circe-core"          % circeVersion,
+      "io.circe"       %% "circe-generic"       % circeVersion,
+      "io.circe"       %% "circe-literal"       % circeVersion,
+      "io.circe"       %% "circe-parser"        % circeVersion,
+      "org.typelevel"  %% "cats-effect"         % "3.5.3",
+      "org.http4s"     %% "http4s-dsl"          % http4sVersion,
+      "org.http4s"     %% "http4s-ember-client" % http4sVersion,
+      "org.http4s"     %% "http4s-circe"        % http4sVersion,
+      "ch.qos.logback" %  "logback-classic"     % "1.4.12"
     )
   )

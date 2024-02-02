@@ -8,7 +8,7 @@ case class ChatCompletion(
   choices: List[Choice],
   created: Int,
   model: String,
-  system_fingerprint: String,
+  system_fingerprint: Option[String],
   `object`: String,
   usage: Usage
 )

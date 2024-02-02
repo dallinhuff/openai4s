@@ -8,7 +8,7 @@ case class ChatCompletionChunk(
   choices: List[ChunkChoice],
   created: Int,
   model: String,
-  system_fingerprint: String,
+  system_fingerprint: Option[String],
   `object`: String
 )
 
