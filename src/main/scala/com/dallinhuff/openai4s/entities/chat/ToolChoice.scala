@@ -1,4 +1,4 @@
-package com.dallinhuff.openai4s.completions
+package com.dallinhuff.openai4s.entities.chat
 
 import io.circe.*
 import io.circe.Decoder.Result
@@ -16,19 +16,20 @@ object ToolChoice:
       a match
         case ToolChoice.None => Json.fromString("none")
         case ToolChoice.Auto => Json.fromString("auto")
-        case ToolChoice.Function(name) => Json.obj(
-          "type" -> Json.fromString("function"),
-          "name" -> name.asJson
-        )
+        case ToolChoice.Function(name) =>
+          Json.obj(
+            "type" -> Json.fromString("function"),
+            "name" -> name.asJson
+          )
     override def apply(c: HCursor): Result[ToolChoice] =
       c.as[String]
         .map:
           case "none" => ToolChoice.None
           case "auto" => ToolChoice.Auto
         .orElse:
-          c.downField("type").as[String].flatMap:
-            case "function" =>
-              c.downField("name").as[String].map(ToolChoice.Function(_))
-            case _ => Left(DecodingFailure("bad type", c.history))
-          
-
+          c.downField("type")
+            .as[String]
+            .flatMap:
+              case "function" =>
+                c.downField("name").as[String].map(ToolChoice.Function(_))
+              case _ => Left(DecodingFailure("bad type", c.history))

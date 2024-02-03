@@ -1,4 +1,4 @@
-package com.dallinhuff.openai4s.completions
+package com.dallinhuff.openai4s.entities.chat
 
 import io.circe.*
 import io.circe.generic.semiauto.*
@@ -24,8 +24,10 @@ object UserContent:
           i.asJson.deepMerge(Json.obj("type" -> Json.fromString("image_url")))
 
     override def apply(c: HCursor): Decoder.Result[UserContent] =
-      c.downField("type").as[String].flatMap:
-        case "text" => txtCodec(c)
-        case "image_url" => imgCodec(c)
-        case _ => Left(DecodingFailure("bad type", c.history))
+      c.downField("type")
+        .as[String]
+        .flatMap:
+          case "text"      => txtCodec(c)
+          case "image_url" => imgCodec(c)
+          case _           => Left(DecodingFailure("bad type", c.history))
   end given

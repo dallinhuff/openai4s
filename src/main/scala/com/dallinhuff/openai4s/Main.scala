@@ -2,7 +2,8 @@ package com.dallinhuff.openai4s
 
 import cats.effect.{IO, IOApp}
 import com.dallinhuff.openai4s.auth.OpenAIKey
-import com.dallinhuff.openai4s.completions.{CreateChatCompletion, Message}
+import com.dallinhuff.openai4s.entities.chat.{ChatMessage, CreateChat}
+import com.dallinhuff.openai4s.requests.{CreateChatRequest, OpenAIRequest}
 
 object Main extends IOApp.Simple:
   override val run: IO[Unit] =
@@ -10,9 +11,9 @@ object Main extends IOApp.Simple:
       key <- IO.pure:
         OpenAIKey("") // TODO: load this in from config
       req <- IO.pure:
-        CreateChatCompletion(
+        CreateChat(
           model = "gpt-3.5-turbo",
-          messages = Message.UserMessage("tell me a joke") :: Nil
+          messages = ChatMessage.User("tell me a joke") :: Nil
         )
       res <- OpenAIClient.getChatCompletion(req)(using key)
       _   <- IO.println(res.choices.head.message.content.get)

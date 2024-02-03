@@ -1,4 +1,4 @@
-package com.dallinhuff.openai4s.completions
+package com.dallinhuff.openai4s.entities.chat
 
 import io.circe.*
 import io.circe.generic.semiauto.*
