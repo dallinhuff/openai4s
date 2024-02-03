@@ -1,6 +1,8 @@
 package com.dallinhuff.openai4s.entities.runs
 
 import com.dallinhuff.openai4s.entities.chat.{Tool, Usage}
+import io.circe.{Decoder, Encoder, Json}
+import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 
 case class Run(
     id: String,
@@ -22,3 +24,10 @@ case class Run(
     metadata: Map[String, String],
     usage: Option[Usage]
 )
+
+object Run:
+  given Decoder[Run] = deriveDecoder[Run]
+  given Encoder[Run] = deriveEncoder[Run]
+    .mapJson(
+      _.deepMerge(Json.obj("object" -> Json.fromString("run"))).dropNullValues
+    )

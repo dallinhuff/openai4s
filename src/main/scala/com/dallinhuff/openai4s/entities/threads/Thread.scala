@@ -12,6 +12,8 @@ case class Thread(
 
 object Thread:
   given Decoder[Thread] = deriveDecoder[Thread]
-  given Encoder[Thread] = deriveEncoder[Thread]
-    .mapJson(_.deepMerge(Json.obj("object" -> "thread".asJson)))
-    .mapJson(_.dropNullValues)
+  given Encoder[Thread] =
+    deriveEncoder[Thread]
+      .mapJson(
+        _.deepMerge(Json.obj("object" -> "thread".asJson)).dropNullValues
+      )

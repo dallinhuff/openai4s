@@ -14,7 +14,7 @@ class ChatChoiceSpec extends AnyWordSpec:
     "message" -> msg.asJson
   )
 
-  "Chat" should:
+  "ChatChoice" should:
     "serialize to OpenAI API" in:
       assert(chatChoice.asJson == json)
 

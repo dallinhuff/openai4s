@@ -7,10 +7,10 @@ import io.circe.syntax.*
 
 case class Assistant(
     id: String,
-    model: String,
-    created_at: Integer,
+    created_at: Int,
     name: Option[String],
     description: Option[String],
+    model: String,
     instructions: Option[String],
     tools: List[Tool],
     file_ids: List[String],
@@ -20,6 +20,8 @@ case class Assistant(
 object Assistant:
   given Decoder[Assistant] = deriveDecoder[Assistant]
 
-  given Encoder[Assistant] = deriveEncoder[Assistant]
-    .mapJson(_.deepMerge(Json.obj("object" -> "assistant".asJson)))
-    .mapJson(_.dropNullValues)
+  given Encoder[Assistant] =
+    deriveEncoder[Assistant]
+      .mapJson(
+        _.deepMerge(Json.obj("object" -> "assistant".asJson)).dropNullValues
+      )
