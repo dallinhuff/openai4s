@@ -6,9 +6,11 @@ import io.circe.generic.semiauto.*
 case class ChatChoice(
     finish_reason: String,
     index: Int,
-    message: ChatMessage.Assistant,
+    message: ChatMessage,
     logprobs: Option[LogProbs] = None
 )
 
 object ChatChoice:
-  given Codec[ChatChoice] = deriveCodec[ChatChoice]
+  given Decoder[ChatChoice] = deriveDecoder[ChatChoice]
+  given Encoder[ChatChoice] = deriveEncoder[ChatChoice]
+    .mapJson(_.dropNullValues)

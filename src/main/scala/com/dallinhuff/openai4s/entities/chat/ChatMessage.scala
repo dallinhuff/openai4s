@@ -9,8 +9,8 @@ enum ChatMessage:
   case System(content: String, name: Option[String] = None)
   case User(content: List[UserContent], name: Option[String] = None)
   case Assistant(
-      content: Option[String],
-      name: Option[String],
+      content: Option[String] = None,
+      name: Option[String] = None,
       tool_calls: Option[List[ToolCall]] = None
   )
   case Tool(content: String, tool_call_id: String)

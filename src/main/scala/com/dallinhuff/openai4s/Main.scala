@@ -16,5 +16,5 @@ object Main extends IOApp.Simple:
           messages = ChatMessage.User("tell me a joke") :: Nil
         )
       res <- OpenAIClient.getChatCompletion(req)(using key)
-      _   <- IO.println(res.choices.head.message.content.get)
+      //_   <- IO.println(res.choices.head.message.content.get)
     yield ()
