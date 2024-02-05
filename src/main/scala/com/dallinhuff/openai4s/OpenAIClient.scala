@@ -1,21 +1,19 @@
 package com.dallinhuff.openai4s
 
-import cats.effect.{Async, IO}
+import cats.effect.Async
 import com.dallinhuff.openai4s.auth.OpenAIKey
 import com.dallinhuff.openai4s.entities.chat.{Chat, CreateChat}
-import com.dallinhuff.openai4s.requests.{CreateChatRequest, OpenAIRequest}
-import io.circe.Codec
+import com.dallinhuff.openai4s.requests.chat.CreateChatRequest
 import org.http4s.circe.CirceEntityDecoder.circeEntityDecoder
 import org.http4s.ember.client.EmberClientBuilder
 
-object OpenAIClient:
-  def clientResource[F[_]: Async] =
+class OpenAIClient[F[_]: Async]:
+  def clientResource =
     EmberClientBuilder
       .default[F]
       .build
 
-  def getChatCompletion(
-      createChatCompletion: CreateChat
-  )(using apiKey: OpenAIKey): IO[Chat] =
-    clientResource[IO].use: client =>
-      client.expect[Chat](CreateChatRequest[IO](createChatCompletion))
+  def createChat(entity: CreateChat)(using OpenAIKey): F[Chat] =
+    clientResource.use: client =>
+      val req = CreateChatRequest[F]()
+      client.expect[Chat](req(entity))
